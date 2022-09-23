@@ -56,7 +56,7 @@ export function RegisterLoginData() {
     }
 
     const dataKey = '@savepass:logins';
-
+    
     // Save data on AsyncStorage and navigate to 'Home' screen
   }
 
