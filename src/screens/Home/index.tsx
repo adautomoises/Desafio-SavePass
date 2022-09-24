@@ -31,11 +31,11 @@ export function Home() {
   async function loadData() {
     try {
     const dataKey = '@savepass:logins';
-    const resultDataKey = await AsyncStorage.getItem(dataKey);
-    const currentResulltDataKey = resultDataKey ? JSON.parse(resultDataKey) : [];
-      if(resultDataKey){
-        setData(currentResulltDataKey);
-        setSearchListData(currentResulltDataKey);
+    const currentData = await AsyncStorage.getItem(dataKey);
+    const currentDataFormatted = currentData ? JSON.parse(currentData) : [];
+      if(currentData){
+        setData(currentDataFormatted);
+        setSearchListData(currentDataFormatted);
       }
     } catch (error) {
       console.log(error);
@@ -43,12 +43,18 @@ export function Home() {
   }
 
   function handleFilterLoginData() {
+    if(searchText !== ''){
+      const resultSearchFilter = searchListData.filter(item => item.service_name.includes(searchText));
+      setSearchListData(resultSearchFilter);
+    } else {
+      setSearchListData(data);
+    }
     // Filter results inside data, save with setSearchListData
   }
 
   function handleChangeInputText(text: string) {
     setSearchText(text);
-    if(searchText === ''){
+    if(text === ''){
       setSearchListData(data);
     }
     // Update searchText value
